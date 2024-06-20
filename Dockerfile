@@ -36,6 +36,9 @@ COPY . /var/www
 # Copy existing application directory permissions
 COPY --chown=www-data:www-data . /var/www
 
+# Make start.sh executable
+RUN chmod +x /var/www/start.sh
+
 # Change current user to www
 USER www-data
 
@@ -43,4 +46,4 @@ USER www-data
 EXPOSE 80
 
 # Start Nginx server
-CMD ["sh", "-c", "php artisan migrate --force && php-fpm -D && nginx -g 'daemon off;'"]
+CMD ["/var/www/start.sh"]
